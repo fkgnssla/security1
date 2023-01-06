@@ -1,5 +1,7 @@
 package com.cos.security1.config;
 
+import com.cos.security1.config.oauth.PrincipalOauth2UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -13,6 +15,9 @@ import org.springframework.security.web.SecurityFilterChain;
 //@EnableGlobalMethodSecurity: Controller의 메소드에 직접적으로 Role을 부여할 수 있다.
 @EnableGlobalMethodSecurity(securedEnabled = true) //@Secured 활성화! => 권한 설정 어노테이션(메서드에 선언 가능)
 public class SecurityConfig {
+
+    @Autowired
+    private PrincipalOauth2UserService principalOauth2UserService;
 
     //해당 메서드의 반환값을 IoC(제어의 역전)로 등록해준다.
     @Bean
@@ -38,7 +43,9 @@ public class SecurityConfig {
                 .defaultSuccessUrl("/") //로그인이 성공하면 "/" 주소로 이동(원래 가려던 페이지로 이동)
                 .and()
                 .oauth2Login() //oauth2 login 기능 작동
-                .loginPage("/loginForm"); //사용자 정의 로그인 페이지, 이때 구글 로그인이 완료된 뒤 후처리가 필요하다. => 다음 강의에서 설명
+                .loginPage("/loginForm") //사용자 정의 로그인 페이지, 구글 로그인 완료 => 액세스 토큰 + 사용자 정보를 받는다.
+                .userInfoEndpoint() //oauth2Login 성공 이후의 설정을 시작
+                .userService(principalOauth2UserService); //principalOauth2UserService에서 처리하겠다.
         return http.build();
     }
     /*
