@@ -2,6 +2,7 @@ package com.cos.security1.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -9,6 +10,8 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity //시큐리티 활성화: 스프링 시큐리티 필터(SecurityConfig)가 스프링 필터체인에 등록이 된다.
+//@EnableGlobalMethodSecurity: Controller의 메소드에 직접적으로 Role을 부여할 수 있다.
+@EnableGlobalMethodSecurity(securedEnabled = true) //@Secured 활성화! => 권한 설정 어노테이션(메서드에 선언 가능)
 public class SecurityConfig {
 
     //해당 메서드의 반환값을 IoC(제어의 역전)로 등록해준다.

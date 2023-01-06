@@ -3,12 +3,15 @@ package com.cos.security1.controller;
 import com.cos.security1.model.User;
 import com.cos.security1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class IndexController {
@@ -42,7 +45,11 @@ public class IndexController {
 
     //스프링 시큐리티가 해당 주소를 낚아채버린다. => SecurityConfig 생성 후 스프링 시큐리티 동작X(디폴트 시큐리티?)
     @GetMapping("/loginForm")
-    public String loginForm() {
+    public String loginForm(HttpSession session) {
+        //로그인 되어있을 때, 로그인 폼으로 이동하는 경우 메인 페이지로 이동
+        if (session.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
+            return "redirect:/";
+        }
         return "loginForm";
     }
 
@@ -65,4 +72,10 @@ public class IndexController {
         return "redirect:/loginForm";
     }
 
+    @GetMapping("/data")
+    @ResponseBody
+    @Secured("ROLE_ADMIN") //"ROLE_ADMIN" 권한인 사용자만 접근 가능
+    public String data() {
+        return "데이터 정보";
+    }
 }
