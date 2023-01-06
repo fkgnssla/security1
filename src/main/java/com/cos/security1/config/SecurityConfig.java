@@ -35,7 +35,10 @@ public class SecurityConfig {
                 .formLogin() //form login 기능 작동
                 .loginPage("/loginForm") //사용자 정의 로그인 페이지
                 .loginProcessingUrl("/login") //login 주소가 호출이 되면 시큐리티가 낚아채서 대신 로그인을 진행해줍니다.
-                .defaultSuccessUrl("/"); //로그인이 성공하면 "/" 주소로 이동(원래 가려던 페이지로 이동)
+                .defaultSuccessUrl("/") //로그인이 성공하면 "/" 주소로 이동(원래 가려던 페이지로 이동)
+                .and()
+                .oauth2Login() //oauth2 login 기능 작동
+                .loginPage("/loginForm"); //사용자 정의 로그인 페이지, 이때 구글 로그인이 완료된 뒤 후처리가 필요하다. => 다음 강의에서 설명
         return http.build();
     }
     /*

@@ -28,3 +28,11 @@ spring:
   output:
     ansi:
       enabled: always
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 914328559211-l1vhnqpsdjd4gaag0ef48m3gbn67d64v.apps.googleusercontent.com
+            client-secret: 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
+            scope: profile,email
