@@ -21,13 +21,18 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable(); //csrf 비활성화?
         http.authorizeRequests()
+                //인증만 되면 들어갈 수 있는 주소
                 .antMatchers("/user/**").authenticated()
+                //인증 + 'ROLE_MANAGER' 또는 'ROLE_ADMIN' 권한이 있는 사용자만 들어갈 수 있는 주소
                 .antMatchers("/manager/**").access("hasAnyRole('ROLE_MANAGER','ROLE_ADMIN')")
+                //인증 + 'ROLE_ADMIN' 권한이 있는 사용자만 들어갈 수 있는 주소
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().permitAll() //이외 모든 경로는 인증을 받지 않아도 누구나 접근 가능
                 .and()
                 .formLogin() //form login 기능 작동
-                .loginPage("/loginForm"); //사용자 정의 로그인 페이지
+                .loginPage("/loginForm") //사용자 정의 로그인 페이지
+                .loginProcessingUrl("/login") //login 주소가 호출이 되면 시큐리티가 낚아채서 대신 로그인을 진행해줍니다.
+                .defaultSuccessUrl("/"); //로그인이 성공하면 "/" 주소로 이동(원래 가려던 페이지로 이동)
         return http.build();
     }
     /*
