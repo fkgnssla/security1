@@ -1,11 +1,14 @@
 package com.cos.security1.config.auth;
 
 import com.cos.security1.model.User;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 //시큐리티가 "/login" 주소 요청이 오면 낚아채서 로그인을 진행
 //로그인 진행이 완료가 되면 시큐리티 session을 만들어 준다. => Security ContextHolder
@@ -14,12 +17,21 @@ import java.util.Collection;
 //User 객체 타입 => UserDetails 타입 객체
 //Security session에 들어갈 수 있는 객체 => Authentication
 //Authentication에서 User 정보를 저장할 때 UserDetails 타입(PrincipalDetails)이어야 한다.
-public class PrincipalDetails implements UserDetails {
+@Data
+public class PrincipalDetails implements UserDetails, OAuth2User {
 
     private User user;
+    private Map<String ,Object> attributes;
 
+    //일반 로그인
     public PrincipalDetails(User user) {
         this.user = user;
+    }
+
+    //OAuth 로그인
+    public PrincipalDetails(User user, Map<String ,Object> attributes) {
+        this.user = user;
+        this.attributes = attributes;
     }
 
     //해당 user의 권한을 반환하는 메서드
@@ -66,5 +78,15 @@ public class PrincipalDetails implements UserDetails {
         //User의 속성에 loginDate 추가
         //현재시간 - 최근 로그인 시간(loginDate) => 1년 초과하면 return false;
         return true;
+    }
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+
+    @Override
+    public String getName() {
+        return null;
     }
 }
