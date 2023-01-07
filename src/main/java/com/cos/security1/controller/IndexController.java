@@ -58,10 +58,11 @@ public class IndexController {
         return "index";
     }
 
+    //Form 로그인 또는 OAuth 로그인을 할 지 모르니 PrincipalDetails(UserDetails, OAuth2User 구현)로 받는다. (분기 할 필요가 없어진다.)
     @GetMapping("/user")
     @ResponseBody
-    //Form 로그인 또는 OAuth 로그인을 할 지 모르니 PrincipalDetails(UserDetails, OAuth2User 구현)로 받는다.
     public String user(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+        System.out.println("principalDetails: " + principalDetails.getUser());
         return "user";
     }
 
