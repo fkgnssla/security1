@@ -40,3 +40,17 @@ spring:
             client-id: 1337665673650043
             client-secret: 1f61e7f84d7c695ff679871b0de0f36a
             scope: public_profile,email
+          naver:
+            client-id: D05QWZluSLWS2aYLy35Z
+            client-secret: hEeZ8YrwHB
+            scope: name,email
+            clientName: naver
+            authorizationGrantType: authorization_code
+            redirectUri: http://localhost:8080/login/oauth2/code/naver
+
+        provider:
+          naver:
+            authorizationUri: https://nid.naver.com/oauth2.0/authorize
+            tokenUri: https://nid.naver.com/oauth2.0/token
+            userInfoUri: https://openapi.naver.com/v1/nid/me
+            userNameAttribute: response #회원정보를 json으로 받는데 response라는 키값으로 네이버가 반환해준다.
