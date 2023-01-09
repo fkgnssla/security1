@@ -1,7 +1,9 @@
 package com.cos.security1.controller;
 
 import com.cos.security1.config.auth.PrincipalDetails;
+import com.cos.security1.model.Board;
 import com.cos.security1.model.User;
+import com.cos.security1.repository.BoardRepository;
 import com.cos.security1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -10,17 +12,21 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class IndexController {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private BoardRepository boardRepository;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -53,7 +59,9 @@ public class IndexController {
     }
 
     @GetMapping("/")
-    public String index() {
+    public String index(Model model) {
+        List<Board> boardAll = boardRepository.findAll();
+        model.addAttribute("boards", boardAll);
         return "index";
     }
 

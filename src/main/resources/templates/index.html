@@ -1,10 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 <h1>인덱스 페이지입니다.</h1>
+<form action="/createBoard" method="get">
+    <input type="submit" value="글 작성"/>
+    <br/>
+    <table>
+        <tr>
+            <th>번호</th>
+            <th>닉네임</th>
+            <th>제목</th>
+        </tr>
+        <tr th:each = "board : ${boards}">
+            <td th:text="${board.id}"></td>
+            <td th:text="${board.createBy}"></td>
+            <td th:text="${board.title}"></td>
+        </tr>
+    </table>
+</form>
+
 </body>
 </html>
