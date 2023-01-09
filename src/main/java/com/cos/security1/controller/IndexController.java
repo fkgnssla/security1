@@ -3,8 +3,8 @@ package com.cos.security1.controller;
 import com.cos.security1.config.auth.PrincipalDetails;
 import com.cos.security1.model.Board;
 import com.cos.security1.model.User;
-import com.cos.security1.repository.BoardRepository;
 import com.cos.security1.repository.UserRepository;
+import com.cos.security1.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -26,7 +25,7 @@ public class IndexController {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private BoardRepository boardRepository;
+    private BoardService boardService;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -60,7 +59,7 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(Model model) {
-        List<Board> boardAll = boardRepository.findAll();
+        List<Board> boardAll = boardService.findAll();
         model.addAttribute("boards", boardAll);
         return "index";
     }
@@ -121,4 +120,21 @@ public class IndexController {
     public String data() {
         return "데이터 정보";
     }
+
+    @GetMapping("/createBoard")
+    public String createBoardForm() {
+        return "createBoardForm";
+    }
+
+    @PostMapping("/createBoard")
+    public String createBoard(@ModelAttribute Board board, 
+                              @AuthenticationPrincipal PrincipalDetails userDetails) {
+        User loginUser = userDetails.getUser();
+        board.setCreatedBy(loginUser.getUsername());
+        board.createBoard(loginUser);
+
+        boardService.save(board);
+        return "redirect:/";
+    }
+
 }

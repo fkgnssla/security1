@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>createBoardForm</title>
+</head>
+<body>
+    <h2>글 쓰기</h2>
+    <form th:action method="post">
+        <input type="text" id="title" name = "title" placeholder="제목을 입력해주세요">
+        <textarea rows="5" id="content" name = "content" placeholder="내용을 입력해주세요"></textarea>
+        <button type="submit">글쓰기</button>
+    </form>
+</body>
+</html>
