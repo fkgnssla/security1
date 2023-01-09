@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
@@ -80,9 +79,10 @@ public class IndexController {
 
     //스프링 시큐리티가 해당 주소를 낚아채버린다. => SecurityConfig 생성 후 스프링 시큐리티 동작X(디폴트 시큐리티?)
     @GetMapping("/loginForm")
-    public String loginForm(HttpSession session) {
+    public String loginForm(@AuthenticationPrincipal PrincipalDetails userDetails) {
         //로그인 되어있을 때, 로그인 폼으로 이동하는 경우 메인 페이지로 이동
-        if (session.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
+        if(userDetails != null) {
+            System.out.println("현재 사용자: " + userDetails.getUser());
             return "redirect:/";
         }
         return "loginForm";
