@@ -7,6 +7,7 @@
 <body>
 <h1>인덱스 페이지입니다.</h1>
 <form action="/board/create" method="get">
+    <p th:if="${login.equals('true')}"><b><span th:text="${nickname}"/></b>님 반갑습니다!</p>
     <input type="button" value="로그인" onclick="location.href='/loginForm'"/>
     <input type="button" value="로그아웃" onclick="location.href='/logout'"/><br/>
     <input type="submit" value="글 작성"/>

@@ -23,6 +23,7 @@ public class BoardService {
         boardRepository.save(board);
     }
 
+    @Transactional(readOnly = true)
     public Board findById(Long boardId) {
         return boardRepository.findById(boardId).get();
     }

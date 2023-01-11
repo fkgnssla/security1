@@ -58,9 +58,15 @@ public class IndexController {
     }
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, @AuthenticationPrincipal PrincipalDetails userDetails) {
         List<Board> boardAll = boardService.findAll();
         model.addAttribute("boards", boardAll);
+
+        if(userDetails != null) { //로그인 했을 경우
+            model.addAttribute("login", "true");
+            model.addAttribute("nickname", userDetails.getUsername());
+        } else model.addAttribute("login", "false");
+
         return "index";
     }
 
