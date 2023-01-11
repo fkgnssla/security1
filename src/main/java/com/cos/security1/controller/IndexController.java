@@ -121,20 +121,4 @@ public class IndexController {
         return "데이터 정보";
     }
 
-    @GetMapping("/createBoard")
-    public String createBoardForm() {
-        return "createBoardForm";
-    }
-
-    @PostMapping("/createBoard")
-    public String createBoard(@ModelAttribute Board board, 
-                              @AuthenticationPrincipal PrincipalDetails userDetails) {
-        User loginUser = userDetails.getUser();
-        board.setCreatedBy(loginUser.getUsername());
-        board.createBoard(loginUser);
-
-        boardService.save(board);
-        return "redirect:/";
-    }
-
 }

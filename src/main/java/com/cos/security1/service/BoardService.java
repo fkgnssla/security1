@@ -22,4 +22,8 @@ public class BoardService {
     public void save(Board board) {
         boardRepository.save(board);
     }
+
+    public Board findById(Long boardId) {
+        return boardRepository.findById(boardId).get();
+    }
 }

@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>인덱스 페이지입니다.</h1>
-<form action="/createBoard" method="get">
+<form action="/board/create" method="get">
     <input type="button" value="로그인" onclick="location.href='/loginForm'"/>
     <input type="button" value="로그아웃" onclick="location.href='/logout'"/><br/>
     <input type="submit" value="글 작성"/>
@@ -14,13 +14,15 @@
     <table>
         <tr>
             <th>번호</th>
-            <th>닉네임</th>
             <th>제목</th>
+            <th>닉네임</th>
         </tr>
         <tr th:each = "board : ${boards}">
             <td th:text="${board.id}"></td>
+            <td>
+                <a th:href="@{'/board/visit/' + ${board.id}}" th:text="${board.title}"></a>
+            </td>
             <td th:text="${board.createdBy}"></td>
-            <td th:text="${board.title}"></td>
         </tr>
     </table>
 </form>

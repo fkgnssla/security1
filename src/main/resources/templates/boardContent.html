@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>boardContent</title>
+</head>
+<body>
+    <h2>글 상세보기</h2>
+    <form th:action method="post">
+        <div>
+            제목 : <span th:text="${board.title}"></span>
+        </div>
+        <div>
+            <textarea rows="10" cols="18" th:text="${board.content}"></textarea>
+        </div>
+        <input type="button" value="뒤로가기" onclick="location.href='/'" />
+    </form>
+</body>
+</html>
