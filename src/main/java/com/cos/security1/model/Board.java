@@ -3,12 +3,14 @@ package com.cos.security1.model;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity
 @Data
 @NoArgsConstructor
+@ToString(exclude = "user")
 public class Board {
 
     @Id
