@@ -45,4 +45,8 @@ public class Board {
         user.getBoards().add(this);
     }
 
+    public void edit(Board board) {
+        this.title = board.getTitle();
+        this.content = board.getContent();
+    }
 }

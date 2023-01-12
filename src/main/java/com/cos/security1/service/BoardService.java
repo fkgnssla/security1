@@ -27,4 +27,9 @@ public class BoardService {
     public Board findById(Long boardId) {
         return boardRepository.findById(boardId).get();
     }
+
+    public void update(Long boardId, Board board) {
+        Board findboard = boardRepository.findById(boardId).get();
+        findboard.edit(board);
+    }
 }

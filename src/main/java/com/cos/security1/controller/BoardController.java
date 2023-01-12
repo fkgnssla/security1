@@ -40,4 +40,19 @@ public class BoardController {
         return "boardContent";
     }
 
+    @GetMapping("/edit/{boardId}")
+    public String editForm(@PathVariable Long boardId, @ModelAttribute Board board, Model model) {
+        //Board board = boardService.findById(boardId); => 쿼리 1번 줄임
+        model.addAttribute("boardId", boardId);
+        //model.addAttribute("board", board);
+
+        return "editBoardForm";
+    }
+
+    @PostMapping("/edit/{boardId}")
+    public  String edit(@PathVariable Long boardId, @ModelAttribute Board board) {
+        boardService.update(boardId, board);
+
+        return "redirect:/";
+    }
 }
