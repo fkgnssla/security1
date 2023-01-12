@@ -33,9 +33,14 @@ public class BoardController {
     }
 
     @GetMapping("/visit/{boardId}")
-    public String visitBoard(@PathVariable Long boardId, Model model) {
+    public String visitBoard(@PathVariable Long boardId, Model model, @AuthenticationPrincipal PrincipalDetails userDetails) {
         Board board = boardService.findById(boardId);
         model.addAttribute("board", board);
+
+        //내 게시글인지 판단
+        if(userDetails.getUser().getUsername().equals(board.getUser().getUsername()))
+            model.addAttribute("mine", "true");
+        else model.addAttribute("mine", "false");
 
         return "boardContent";
     }

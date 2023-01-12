@@ -10,7 +10,7 @@
         <input type="text" id="title" name = "title" th:field="*{title}" readonly>
         <textarea rows="5" id="content" name = "content" th:field="*{content}" readonly></textarea>
 
-        <input type="submit" value="수정하기"/>
+        <input type="submit" value="수정하기" th:if="${mine.equals('true')}"/>
         <input type="button" value="뒤로가기" onclick="location.href='/'" />
     </form>
 </body>
