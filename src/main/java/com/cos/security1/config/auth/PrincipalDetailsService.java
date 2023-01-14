@@ -25,7 +25,7 @@ public class PrincipalDetailsService implements UserDetailsService {
         if(userEntity != null) {
             return new PrincipalDetails(userEntity); //UserDetails에 user 정보 저장하여 Authentication에 반환
         }
-
-        return null;
+        throw new UsernameNotFoundException("아이디가 존재하지 않습니다.");
+//        return null;
     }
 }

@@ -101,6 +101,12 @@ public class IndexController {
         return "loginForm";
     }
 
+    @GetMapping("/loginForm/error")
+    public String loginFormError(Model model) {
+        model.addAttribute("loginErrorMsg","아이디 또는 비밀번호를 확인해주세요.");
+        return "loginForm";
+    }
+
     @GetMapping("/joinForm")
     public String joinForm() {
         return "joinForm";
