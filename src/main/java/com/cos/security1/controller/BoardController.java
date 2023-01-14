@@ -55,9 +55,17 @@ public class BoardController {
     }
 
     @PostMapping("/edit/{boardId}")
-    public  String edit(@PathVariable Long boardId, @ModelAttribute Board board) {
+    public String edit(@PathVariable Long boardId, @ModelAttribute Board board) {
         boardService.update(boardId, board);
 
         return "redirect:/";
     }
+
+    @GetMapping("/delete/{boardId}")
+    public String delete(@PathVariable Long boardId) {
+        boardService.delete(boardId);
+
+        return "redirect:/";
+    }
+
 }

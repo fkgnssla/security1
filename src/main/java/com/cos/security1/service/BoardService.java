@@ -32,4 +32,9 @@ public class BoardService {
         Board findboard = boardRepository.findById(boardId).get();
         findboard.edit(board);
     }
+
+    public void delete(Long boardId) {
+        Board board = boardRepository.findById(boardId).get();
+        boardRepository.delete(board);
+    }
 }

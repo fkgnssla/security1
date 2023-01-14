@@ -11,6 +11,9 @@
         <textarea rows="5" id="content" name = "content" th:field="*{content}" readonly></textarea>
 
         <input type="submit" value="수정하기" th:if="${mine.equals('true')}"/>
+        <a th:href="@{'/board/delete/' + ${board.id}}" th:if="${mine.equals('true')}">
+            <input type="button" value="삭제하기">
+        </a>
         <input type="button" value="뒤로가기" onclick="location.href='/'" />
     </form>
 </body>
